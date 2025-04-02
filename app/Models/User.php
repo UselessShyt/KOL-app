@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -51,17 +53,26 @@ class User extends Authenticatable
         ];
     }
 
-    public function referrer()
+    /**
+     * Get the user who referred this user.
+     */
+    public function referrer(): BelongsTo
     {
         return $this->belongsTo(User::class, 'referred_by');
     }
 
-    public function referrals()
+    /**
+     * Get the users referred by this user.
+     */
+    public function referrals(): HasMany
     {
         return $this->hasMany(User::class, 'referred_by');
     }
 
-    public function sales()
+    /**
+     * Get the sales made by this user.
+     */
+    public function sales(): HasMany
     {
         return $this->hasMany(Sale::class);
     }

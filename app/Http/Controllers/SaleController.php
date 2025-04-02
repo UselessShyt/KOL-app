@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Sale;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
@@ -11,11 +12,11 @@ class SaleController extends Controller
 {
     use AuthorizesRequests;
 
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
+    /**
+     * Simulate a sale and calculate commissions
+     *
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function simulateSale()
     {
         $user = auth()->user();
@@ -41,6 +42,11 @@ class SaleController extends Controller
         return redirect()->back()->with('success', 'Sale simulated successfully! You earned RM100 commission.');
     }
 
+    /**
+     * Display the dashboard with user statistics
+     *
+     * @return \Illuminate\View\View
+     */
     public function dashboard()
     {
         $user = auth()->user();
